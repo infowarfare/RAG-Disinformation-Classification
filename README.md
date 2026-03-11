@@ -74,7 +74,7 @@ Die Evaluation verfolgt einen mehrstufigen Analyse-Ansatz:
 2.  **Semantik:** Extraktion von Embeddings via `voyage-3-large`.
 3.  **Verification:** Haystack RAG-Pipeline zur Klassifizierung von Desinformation mit Hilfe von Vektordatenbanken.
 4.  **Evaluation:** Evaluation anhand des Macro-F1 Scores und MCC
-5.  **Statistischer Signifikanztest:** Signifikanztest mittels Paired-Bootstrap Test
+5.  **Statistischer Signifikanztest:** Signifikanztest mittels Paired-Bootstrap Test und Holm-Bonferroni Korrektur
 
 ---
 *Dieses Projekt dient der automatisierten Unterstützung bei der Identifikation von Desinformation. Ergebnisse sollten stets kritisch hinterfragt werden.*
