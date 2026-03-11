@@ -1,6 +1,6 @@
 # Retrieval Augmented Disinformation Detection in German
 
-Dieses Projekt implementiert ein hybrides System zur Erkennung von Desinformation. Durch Verwendung von **Retrieval-Augmented Generation (RAG)** mit aktuellen Sprachmodellen (LLMs/SLMs) ermöglicht es eine präzise Klassifizierung in Echtzeit.
+Dieses Projekt implementiert ein hybrides System zur Erkennung von Desinformation. Durch Verwendung von **Retrieval-Augmented Generation (RAG)** mit aktuellen Sprachmodellen (LLMs/SLMs) wird eine präzise Klassifizierung in Echtzeit ermöglicht.
 
 ## 🛠 Tech Stack
 
@@ -44,8 +44,8 @@ Klassifizierung mit LogReg + TF-IDF und SBERT Embeddings
 
 1.  **Repository klonen:**
     ```bash
-    git clone 
-    cd radd-project
+    git clone [https://github.com/infowarfare/RAG-Disinformation-Classification.git]
+    cd RAG-Disinformation-Classification
     ```
 
 2.  **Virtuelle Umgebung:**
@@ -69,6 +69,8 @@ Die Evaluation verfolgt einen mehrstufigen Analyse-Ansatz:
 1.  **Baseline:** BERT & Logistische Regression (TF-IDF | SBERT) für schnelle statistische Einordnung.
 2.  **Semantik:** Extraktion von Embeddings via `voyage-3-large`.
 3.  **Verification:** Haystack RAG-Pipeline zur Klassifizierung von Desinformation mit Hilfe von Vektordatenbanken.
+4.  **Evaluation:** Evaluation anhand des Macro-F1 Scores und MCC
+5.  **Statistischer Signifikanztest:** Signifikanztest mittels Paired-Bootstrap Test
 
 ---
 *Dieses Projekt dient der automatisierten Unterstützung bei der Identifikation von Desinformation. Ergebnisse sollten stets kritisch hinterfragt werden.*
