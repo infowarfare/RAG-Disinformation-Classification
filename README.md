@@ -40,6 +40,10 @@ Für NLU-Tasks und Klassifizierungen:
 Klassifizierung mit LogReg + TF-IDF und SBERT Embeddings
 * `T-Systems-onsite/cross-en-de-roberta-sentence-transformer` (SBERT-Embeddings)
 
+### 5. Datensatz
+Soon 🚧
+Testdatensatz: German Propaganda Dataset 
+
 ## 📋 Installation
 
 1.  **Repository klonen:**
