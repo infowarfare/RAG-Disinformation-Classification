@@ -3,7 +3,7 @@ from haystack_integrations.components.embedders.voyage_embedders import VoyageDo
 def get_voyage_document_embedder():
 
     doc_embedder = VoyageDocumentEmbedder(
-    model="voyage-3-large",
+    model="voyage-4-large",
     input_type="document",
     )
 

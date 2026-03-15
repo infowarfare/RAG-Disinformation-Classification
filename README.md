@@ -6,7 +6,7 @@ Dieses Projekt implementiert ein hybrides System zur Erkennung von Desinformatio
 
 * **Framework:** [Haystack](https://haystack.deepset.ai/) (Orchestrierung der RAG-Pipelines)
 * **Vector Database:** InMemoryDB (Migration auf **Milvus** geplant)
-* **Embeddings** `voyage-3-large` (MongoDB: https://https://www.voyageai.com/)
+* **Embeddings** `voyage-4-large` (MongoDB: https://https://www.voyageai.com/)
 
 ## 🧠 Model Zoo
 
