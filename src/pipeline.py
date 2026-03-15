@@ -16,6 +16,7 @@ from retrievers.retriever import get_in_memory_retriever, get_milvus_retriever
 from models.google_genai_generator import get_gemini_generator
 from models.openai_generator import get_openai_generator
 from save_metrics.eval_metrics import save_metrics_to_file
+from save_metrics.calculate_metrics import evaluate
 from haystack_integrations.components.connectors.langfuse import LangfuseConnector
 from datetime import datetime
 from pymilvus import MilvusClient
@@ -122,16 +123,9 @@ def execute_rag_classification_pipeline() -> None:
         print(f"No.: {count+1} | Prediction: {cls}")
         predicted_labels.append(cls)
 
-    pred_metrics = {
-        "predictions": predicted_labels,
-        "Macro-F1": f1_score(actual_labels, predicted_labels, average='macro'),
-        "Precision": precision_score(actual_labels, predicted_labels, average='macro'),
-        "Recall": recall_score(actual_labels, predicted_labels, average='macro'),
-        "MCC": matthews_corrcoef(actual_labels, predicted_labels)
-    }
-
+    pred_metrics = evaluate(predictions=predicted_labels, gold_labels=actual_labels)
     print(f"Macro-F1: {pred_metrics["Macro-F1"]}")
-
+    
     save_metrics_to_file("gemini-3-flash-preview", pred_metrics, folder_path="src\\eval_results")
 
 def main():
