@@ -73,20 +73,7 @@ pipeline.connect("prompt_builder.prompt", "llm.messages")
 
 
 def execute_pipeline(text: str) -> int:
-    """
-    Executes a Haystack pipeline using the provided input text.
-
-    This function wraps a Haystack `Pipeline.run()` call. It passes the input 
-    string to the starting component (e.g., a 'text_embedder' or 'prompt_builder') 
-    and processes the resulting dictionary to return a specific integer value.
-
-    Args:
-        text (str): The input query or document text to be processed by 
-            the pipeline.
-
-    Returns:
-        int: The result of the pipeline execution
-    """
+    
     response = pipeline.run({"text_embedder": {"text": text}, "prompt_builder": {"query": text}})
     cls = response["llm"]["replies"][0].text
 
@@ -99,16 +86,6 @@ def execute_pipeline(text: str) -> int:
     return cls
 
 def execute_rag_classification_pipeline() -> None:
-    """
-    Excute the full RAG-based classification workflow.
-
-    This function initializes a Haystack pipeline, retrieves relevant 
-    documents, and passes them to an LLM to classify input data. 
-    Results are typically logged or saved to the filesystem.
-
-    Returns:
-        None
-    """
 
     # load test data
     df = pd.read_csv("src\\pipeline_testing_data\\test_dataset.csv", encoding="utf-8")
@@ -125,7 +102,7 @@ def execute_rag_classification_pipeline() -> None:
 
     pred_metrics = evaluate(predictions=predicted_labels, gold_labels=actual_labels)
     print(f"Macro-F1: {pred_metrics["Macro-F1"]}")
-    
+
     save_metrics_to_file("gemini-3-flash-preview", pred_metrics, folder_path="src\\eval_results")
 
 def main():
