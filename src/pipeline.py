@@ -1,3 +1,7 @@
+import os
+
+os.environ["HAYSTACK_CONTENT_TRACING_ENABLED"] = "true"
+
 import pandas as pd
 import json
 import uuid
@@ -10,24 +14,21 @@ from embeddings.query_embedder import get_voyage_query_embedding
 from embeddings.document_embedder import get_voyage_document_embedder
 from retrievers.retriever import get_in_memory_retriever, get_milvus_retriever
 from models.google_genai_generator import get_gemini_generator
-from eval.eval_metrics import save_metrics_to_file
+from models.openai_generator import get_openai_generator
+from save_metrics.eval_metrics import save_metrics_to_file
 from haystack_integrations.components.connectors.langfuse import LangfuseConnector
 from datetime import datetime
 from pymilvus import MilvusClient
 
-client = MilvusClient(
-    uri="http://localhost:19530",
-    user="root",
-    password="Milvus",
-)
-
 from dotenv import load_dotenv
+# Load API Keys
+load_dotenv() 
 
 # Eval metrics
 from sklearn.metrics import f1_score,  precision_score, recall_score, matthews_corrcoef
 
-# Load API Keys
-load_dotenv() 
+
+
 
 # Init
 document_store = get_in_memory_document_store()
@@ -36,7 +37,9 @@ retriever = get_in_memory_retriever(doc_store=document_store, num_k=4)
 query_embedder = get_voyage_query_embedding()  # text embedder
 doc_embedder = get_voyage_document_embedder() 
 prompt_builder = get_prompt_builder()
-chat_generator = get_gemini_generator() # Gemini-3-flash-preview
+# chat_generator = get_gemini_generator() # 
+chat_generator = get_openai_generator()
+
 
 # Load csv data as docs
 df = pd.read_csv("src\\pipeline_testing_data\\embedding_dataset.csv", encoding="utf-8")
@@ -129,7 +132,7 @@ def execute_rag_classification_pipeline() -> None:
 
     print(f"Macro-F1: {pred_metrics["Macro-F1"]}")
 
-    save_metrics_to_file("gemini_rag_clf", "gemini-3-flash-preview", pred_metrics, folder_path="src\\eval_results")
+    save_metrics_to_file("gemini-3-flash-preview", pred_metrics, folder_path="src\\eval_results")
 
 def main():
     execute_rag_classification_pipeline()

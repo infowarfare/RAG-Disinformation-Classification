@@ -5,6 +5,6 @@ from dotenv import load_dotenv
 load_dotenv() 
 
 def get_gemini_generator():
-    chat_generator = GoogleGenAIChatGenerator(model="gemini-3-flash-preview")
+    chat_generator = GoogleGenAIChatGenerator(model="gemini-3.1-flash-lite-preview")
     return chat_generator
 

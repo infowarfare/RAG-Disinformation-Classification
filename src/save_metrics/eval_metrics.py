@@ -1,8 +1,8 @@
-import datetime
+from datetime import datetime
 import uuid
 import json
 
-def save_metrics_to_file(clf_name, model_name, pred_metrics, folder_path: str) -> None:
+def save_metrics_to_file(model_name, pred_metrics, folder_path: str) -> None:
         """
     Saves classification performance metrics to a structured file.
 
@@ -11,7 +11,6 @@ def save_metrics_to_file(clf_name, model_name, pred_metrics, folder_path: str) -
     benchmarking.
 
     Args:
-        clf_name (str): The name of the classifier or algorithm used.
         model_name (str): The specific version or name of the model.
         pred_metrics (dict): A dictionary containing metric names as keys and 
             their calculated values (e.g., {'accuracy': 0.95, 'macro-f1': 0.94}).
@@ -33,11 +32,10 @@ def save_metrics_to_file(clf_name, model_name, pred_metrics, folder_path: str) -
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
             unique_id = str(uuid.uuid4())[:8] # Short UUID for extra safety
 
-            filename = f"{folder_path}\\metrics_{clf_name}_{unique_id}"
+            filename = f"{folder_path}\\metrics_{model_name}_{unique_id}"
 
             meta_data = {
                 "meta_data": {
-                    "classifier_name": clf_name,
                     "model_name": model_name,
                     "timestamp": timestamp,
                     "run_id": unique_id
