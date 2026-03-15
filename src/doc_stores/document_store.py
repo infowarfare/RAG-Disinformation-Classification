@@ -1,5 +1,7 @@
 from haystack.document_stores.in_memory import InMemoryDocumentStore
 from milvus_haystack import MilvusDocumentStore
+from haystack.utils import Secret
+import os
 
 
 def get_in_memory_document_store():
@@ -9,13 +11,15 @@ def get_in_memory_document_store():
 def get_milvus_document_store():
     
     document_store = MilvusDocumentStore(
-        connection_args={"uri": "./milvus.db"},
-        collection_name="Milvus VectorDB",
-        collection_description="VectorDB for testing the RAG Pipeline",
+        collection_name="test_db",
+        connection_args={
+        "uri": "https://in03-aaeed774ea9d1b8.serverless.aws-eu-central-1.cloud.zilliz.com",  # Your Public Endpoint
+        "token": os.getenv("ZILLIZ_CLOUD_API_KEY"),  # API key, we recommend using the Secret class to load the token from env variable for security.
+        "secure": True
+        },
         drop_old=True,
-        search_params={"metric_type": "COSINE"}
     )
-
+    
     return document_store
 
 

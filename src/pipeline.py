@@ -13,6 +13,13 @@ from models.google_genai_generator import get_gemini_generator
 from eval.eval_metrics import save_metrics_to_file
 from haystack_integrations.components.connectors.langfuse import LangfuseConnector
 from datetime import datetime
+from pymilvus import MilvusClient
+
+client = MilvusClient(
+    uri="http://localhost:19530",
+    user="root",
+    password="Milvus",
+)
 
 from dotenv import load_dotenv
 
@@ -23,11 +30,11 @@ from sklearn.metrics import f1_score,  precision_score, recall_score, matthews_c
 load_dotenv() 
 
 # Init
-doc_store = get_in_memory_document_store()
-doc_writer = DocumentWriter(document_store=doc_store)
-retriever = get_milvus_retriever(doc_store=doc_store, num_k=4)
+document_store = get_in_memory_document_store()
+doc_writer = DocumentWriter(document_store=document_store)
+retriever = get_in_memory_retriever(doc_store=document_store, num_k=4)
 query_embedder = get_voyage_query_embedding()  # text embedder
-doc_embedder = get_voyage_document_embedder()
+doc_embedder = get_voyage_document_embedder() 
 prompt_builder = get_prompt_builder()
 chat_generator = get_gemini_generator() # Gemini-3-flash-preview
 
@@ -44,7 +51,7 @@ documents = [
 
 # Embed documents
 docs_with_embeddings = doc_embedder.run(documents)
-doc_store.write_documents(docs_with_embeddings["documents"], policy=DuplicatePolicy.OVERWRITE)
+document_store.write_documents(docs_with_embeddings["documents"], policy=DuplicatePolicy.OVERWRITE)
 
 # RAG Pipeline
 pipeline = Pipeline()
