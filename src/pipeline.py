@@ -85,7 +85,7 @@ def execute_pipeline(text: str) -> int:
     return cls
 
 
-def save_metrics_to_file(clf_name, provider, model_name, task, pred_metrics, folder_path: str) -> None:
+def save_metrics_to_file(clf_name, model_name, task, pred_metrics, folder_path: str) -> None:
         """
     Saves classification performance metrics to a structured file.
 
@@ -123,9 +123,7 @@ def save_metrics_to_file(clf_name, provider, model_name, task, pred_metrics, fol
             meta_data = {
                 "meta_data": {
                     "classifier_name": clf_name,
-                    "provider": provider,
                     "model_name": model_name,
-                    "task": task,
                     "timestamp": timestamp,
                     "run_id": unique_id
                 }
