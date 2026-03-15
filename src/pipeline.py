@@ -32,7 +32,7 @@ prompt_builder = get_prompt_builder()
 chat_generator = get_gemini_generator() # Gemini-3-flash-preview
 
 # Load csv data as docs
-df = pd.read_csv("src\\data\\propaganda_train.csv", encoding="utf-8")
+df = pd.read_csv("src\\pipeline_testing_data\\embedding_dataset.csv", encoding="utf-8")
 
 # Convert to Haystack Documents
 documents = [
@@ -100,7 +100,7 @@ def execute_rag_classification_pipeline() -> None:
     """
 
     # load test data
-    df = pd.read_csv("src\\data\\propaganda_test.csv", encoding="utf-8")
+    df = pd.read_csv("src\\pipeline_testing_data\\test_dataset.csv", encoding="utf-8")
     # get labels
     actual_labels = df['label'].tolist()
     # empty list for classification
