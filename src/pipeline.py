@@ -9,7 +9,8 @@ from doc_stores.document_store import get_in_memory_document_store
 from embeddings.query_embedder import get_voyage_query_embedding
 from embeddings.document_embedder import get_voyage_document_embedder
 from retrievers.retriever import get_in_memory_retriever
-from models.google_genai_generator import get_gemini3_generator
+from models.google_genai_generator import get_gemini_generator
+from eval.eval_metrics import save_metrics_to_file
 from datetime import datetime
 
 from dotenv import load_dotenv
@@ -27,7 +28,7 @@ retriever = get_in_memory_retriever(doc_store=doc_store, num_k=15)
 query_embedder = get_voyage_query_embedding()  # text embedder
 doc_embedder = get_voyage_document_embedder()
 prompt_builder = get_prompt_builder()
-chat_generator = get_gemini3_generator() # Gemini-3-flash-preview
+chat_generator = get_gemini_generator() # Gemini-3-flash-preview
 
 # Load csv data as docs
 df = pd.read_csv("src\\data\\propaganda_train.csv", encoding="utf-8")
@@ -84,59 +85,6 @@ def execute_pipeline(text: str) -> int:
             cls = 1
     return cls
 
-
-def save_metrics_to_file(clf_name, model_name, task, pred_metrics, folder_path: str) -> None:
-        """
-    Saves classification performance metrics to a structured file.
-
-    This function takes model metadata and evaluation results, formats them, 
-    and persists them to a designated directory for later analysis or 
-    benchmarking.
-
-    Args:
-        clf_name (str): The name of the classifier or algorithm used.
-        provider (str): The service or library provider (e.g., 'OpenAI', 'Anthropic').
-        model_name (str): The specific version or name of the model.
-        task (str): The type of task performed (e.g., 'disinformation classification').
-        pred_metrics (dict): A dictionary containing metric names as keys and 
-            their calculated values (e.g., {'accuracy': 0.95, 'macro-f1': 0.94}).
-        folder_path (str): The directory path where the output file should be saved.
-
-    Returns:
-        None: The function writes to the filesystem and does not return a value.
-
-    Raises:
-        Exeception: If the directory cannot be created or the file cannot be written.
-    """
-        # get pred_metrics
-        try:
-            if pred_metrics is None:
-                raise ValueError("Predictions metrics not found.")
-            
-            
-
-            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-            unique_id = str(uuid.uuid4())[:8] # Short UUID for extra safety
-
-            filename = f"{folder_path}\\metrics_{clf_name}_{task}_{unique_id}"
-
-            meta_data = {
-                "meta_data": {
-                    "classifier_name": clf_name,
-                    "model_name": model_name,
-                    "timestamp": timestamp,
-                    "run_id": unique_id
-                }
-            }
-
-            complete_metrics = meta_data | pred_metrics
-
-            with open(f"{filename}.json", "w") as f:
-                json.dump(complete_metrics, f, indent=4)   
-
-        except Exception as e:
-            raise Exception(f"An unexpected Error occurred while saving metrics: {str(e)}")
-
 def execute_rag_classification_pipeline() -> None:
     """
     Excute the full RAG-based classification workflow.
@@ -172,7 +120,7 @@ def execute_rag_classification_pipeline() -> None:
 
     print(f"Macro-F1: {pred_metrics["Macro-F1"]}")
 
-    save_metrics_to_file("gemini_rag_clf", "google", "gemini-3-flash-preview", pred_metrics, folder_path="src\\eval_results")
+    save_metrics_to_file("gemini_rag_clf", "gemini-3-flash-preview", pred_metrics, folder_path="src\\eval_results")
 
 def main():
     execute_rag_classification_pipeline()

@@ -38,8 +38,8 @@ from dotenv import load_dotenv
 from sklearn.metrics import f1_score,  precision_score, recall_score, matthews_corrcoef
 
 # import voyage key
-from google.colab import userdata
-from haystack.utils import Secret
+# from google.colab import userdata
+# from haystack.utils import Secret
 
 os.environ["VOYAGE_API_KEY"] = userdata.get('VOYAGE_API_KEY')
 
