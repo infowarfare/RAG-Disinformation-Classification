@@ -15,8 +15,8 @@ from embeddings.document_embedder import get_voyage_document_embedder
 from retrievers.retriever import get_in_memory_retriever, get_milvus_retriever
 from models.google_genai_generator import get_gemini_generator
 from models.openai_generator import get_openai_generator
-from save_metrics.save_metrics import save_metrics_to_file
-from save_metrics.calculate_metrics import evaluate
+from metrics.save_metrics import save_metrics_to_file
+from metrics.calculate_metrics import evaluate
 from haystack_integrations.components.connectors.langfuse import LangfuseConnector
 from datetime import datetime
 from pymilvus import MilvusClient
