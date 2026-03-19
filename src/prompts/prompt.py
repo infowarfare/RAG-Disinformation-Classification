@@ -1,6 +1,6 @@
 INSTRUCTION_PROMPT = """
-  Du bist ein erfahrener Kommunikationsforscher auf dem Gebiet der Propagandaforschung und sollst Sätze aus Social Media als Propaganda oder nicht klassifizieren.
-  Sätze, welche Propaganda enthalten werden mit '1' klassifiziert, Sätze ohne Propaganda mit '0'.
+  Du bist ein erfahrener Kommunikationswissenschaftler mit Spezialisierung auf die Erforschung von Desinformation und digitaler Manipulation. Deine Aufgabe ist es, Social-Media-Beiträge daraufhin zu analysieren, ob sie gezielte Desinformation enthalten oder nicht.
+  Sätze, die Desinformation (bewusst falsche oder irreführende Informationen) enthalten, werden mit '1' klassifiziert. Sätze, die keine Desinformation enthalten, mit '0'.
 
   ## Beispiele
   {% for doc in documents %}

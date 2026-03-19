@@ -2,7 +2,7 @@ from datetime import datetime
 import uuid
 import json
 
-def save_metrics_to_file(model_name, pred_metrics, folder_path: str) -> None:
+def save_metrics_to_file(model_name, top_k, pred_metrics, folder_path: str) -> None:
         """
     Saves classification performance metrics to a structured file.
 
@@ -38,7 +38,8 @@ def save_metrics_to_file(model_name, pred_metrics, folder_path: str) -> None:
                 "meta_data": {
                     "model_name": model_name,
                     "timestamp": timestamp,
-                    "run_id": unique_id
+                    "run_id": unique_id,
+                    "top_k": top_k
                 }
             }
 

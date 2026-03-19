@@ -1,3 +1,4 @@
 .venv
 **/.env
 **/german_disinfo_dataset
+**/db
